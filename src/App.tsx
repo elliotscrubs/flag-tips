@@ -1,5 +1,7 @@
-import { css, Skeleton } from '@mui/material';
+import { css, Skeleton, Button } from '@mui/material';
 import FlagComponent from './FlagComponent';
+import DropdownMenu from './DropdownMenu.';
+
 
 const headerCss = css`
   text-transform: uppercase;
@@ -18,7 +20,7 @@ const FlagSelector = () => (
     variant='rounded'
     sx={{
       height: '30px',
-      margin: '30px 0',
+      margin: '20px 0',
     }}
   />
 );
@@ -44,13 +46,25 @@ function App() {
         }}>
         Flag - Tips
       </div>
-      <FlagComponent/>
+      <FlagComponent />
+      <DropdownMenu  /> 
       <div>
         {Array(6)
           .fill(null)
           .map((_, i) => (
             <FlagSelector key={i} />
           ))}
+        <Button // tipp leadás gombja 
+          style={{
+            color: 'black',
+            fontSize: '20px',
+            fontWeight: 'bold',
+            border: '3px solid rgba(0, 0, 0, 0.2)',
+            background: 'grey',
+          }}
+          onClick={() =>{} }>
+          Guess
+        </Button>
       </div>
     </div>
   );
