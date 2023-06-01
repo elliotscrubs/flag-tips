@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { css, Autocomplete, TextField } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
 import countriesData from './countries.json';
 
 const countries: { [key: string]: string } = countriesData; // mivel a json fájlban nincs index definiálva, ezért nem tudja használni a string kifejezést. ezért kell ez a változó.
@@ -17,6 +17,8 @@ const DropdownMenu = ({
   const [selectedOptions, setSelectedOptions] = useState<Array<string>>(
     Array(6).fill('')
   );
+
+  const defaultLabel = "What's your tip?";
 
   const handleChange = (
     event: React.ChangeEvent<{}>,
@@ -39,20 +41,18 @@ const DropdownMenu = ({
         <Autocomplete
           key={index}
           options={Object.keys(countries)}
-          getOptionLabel={countryCode => countries[countryCode]} // beállítjuk a megjelenített szöveget az országkódhoz tartozó országnév alapján
-          value={selectedOption}
+          getOptionLabel={countryCode => countries[countryCode] || defaultLabel} // beállítjuk a megjelenített szöveget az országkódhoz tartozó országnév alapján
+          value={selectedOption || ''}
           onChange={(event, value) =>
             handleChange(event, value ? { label: value } : null, index)
           }
-          renderInput={params => (
-            <TextField {...params} />
-          )}
+          renderInput={params => <TextField {...params} />}
           style={{
             color: 'black',
             fontWeight: 'bold',
             border: '3px solid rgba(0, 0, 0, 0.2)',
             marginBottom: '5px',
-            marginTop: '5px'
+            marginTop: '5px',
           }}
         />
       ))}

@@ -1,17 +1,6 @@
-import { css, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import FlagComponent from './FlagComponent';
 import DropdownMenu from './DropdownMenu.';
-
-
-const headerCss = css`
-  text-transform: uppercase;
-  font-size: 40px;
-  font-weight: bold;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.11);
-  margin-bottom: 20px;
-  padding: 10px 0;
-`;
-
 
 
 function App() {
@@ -22,19 +11,19 @@ function App() {
 
   return (
     <div
-      style={{
+      style={{ // ez a zászló css-e
         width: '500px',
         margin: 'auto',
         textAlign: 'center',
       }}
     >
       <div
-        style={{
+        style={{ // ez a Flag-Tips felirat css-e
           textTransform: 'uppercase',
           fontSize: '40px',
           fontWeight: 'bold',
           borderBottom: '2px solid rgba(0, 0, 0, 0.11)',
-          marginBottom: '20px',
+          marginBottom: '10px',
           padding: '10px 0',
         }}
       >
@@ -44,7 +33,7 @@ function App() {
       <DropdownMenu handleMenuChange={handleMenuChange} 
       />
       <div>
-        <Button
+        <Button // ez a Guess gomb css-e
           style={{
             color: 'black',
             fontSize: '20px',
