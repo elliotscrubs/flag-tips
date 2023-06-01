@@ -10,11 +10,11 @@ function App() {
     // Itt kezelheted a kiválasztott országokat
     console.log(`Selected option ${index + 1}: ${value}`);
   };
-  const [randomCountryCode, setRandomCountryCode] = useState<string | null>(null);
+  const [solutionCountryCode, setSolutionCountryCode] = useState<string | null>(null);
 
   useEffect(() => {
     const countryCodes = Object.keys(countries); // Országkódok (rövidített nevek) lekérése
-    setRandomCountryCode(countryCodes[Math.floor(Math.random() * countryCodes.length)]);  // Véletlenszerű országkód kiválasztása
+    setSolutionCountryCode(countryCodes[Math.floor(Math.random() * countryCodes.length)]);  // Véletlenszerű országkód kiválasztása
   }, []);
 
   return (
@@ -37,7 +37,7 @@ function App() {
         }}>
         Flag - Tips
       </div>
-      <FlagComponent countryCode={randomCountryCode} />
+      <FlagComponent countryCode={solutionCountryCode} />
       <DropdownMenu handleMenuChange={handleMenuChange} />
       <div>
         <Button // ez a Guess gomb css-e
