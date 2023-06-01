@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from 'react';
+import countries from './countries.json';
 import { Button } from '@mui/material';
 import FlagComponent from './FlagComponent';
 import DropdownMenu from './DropdownMenu.';
@@ -8,30 +10,35 @@ function App() {
     // Itt kezelheted a kiválasztott országokat
     console.log(`Selected option ${index + 1}: ${value}`);
   };
+  const [randomCountryCode, setRandomCountryCode] = useState<string | null>(null);
+
+  useEffect(() => {
+    const countryCodes = Object.keys(countries); // Országkódok (rövidített nevek) lekérése
+    setRandomCountryCode(countryCodes[Math.floor(Math.random() * countryCodes.length)]);  // Véletlenszerű országkód kiválasztása
+  }, []);
 
   return (
     <div
-      style={{ // ez a zászló css-e
+      style={{
+        // ez a zászló css-e
         width: '500px',
         margin: 'auto',
         textAlign: 'center',
-      }}
-    >
+      }}>
       <div
-        style={{ // ez a Flag-Tips felirat css-e
+        style={{
+          // ez a Flag-Tips felirat css-e
           textTransform: 'uppercase',
           fontSize: '40px',
           fontWeight: 'bold',
           borderBottom: '2px solid rgba(0, 0, 0, 0.11)',
           marginBottom: '10px',
           padding: '10px 0',
-        }}
-      >
+        }}>
         Flag - Tips
       </div>
-      <FlagComponent />
-      <DropdownMenu handleMenuChange={handleMenuChange} 
-      />
+      <FlagComponent countryCode={randomCountryCode} />
+      <DropdownMenu handleMenuChange={handleMenuChange} />
       <div>
         <Button // ez a Guess gomb css-e
           style={{
@@ -41,8 +48,7 @@ function App() {
             border: '3px solid rgba(0, 0, 0, 0.2)',
             background: 'grey',
           }}
-          onClick={() => {}}
-        >
+          onClick={() => {}}>
           Guess
         </Button>
       </div>
@@ -51,4 +57,3 @@ function App() {
 }
 
 export default App;
-  

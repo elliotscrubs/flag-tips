@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import countries from './countries.json';
 
-const FlagComponent = () => {
+const FlagComponent = ({ countryCode }: { countryCode: string | null }) => {
   const [currentFlag, setCurrentFlag] = useState(null);
 
   useEffect(() => {
     const importFlag = async () => {
-      const countryCodes = Object.keys(countries); // Országkódok (rövidített nevek) lekérése
-      const randomCountry =
-        countryCodes[Math.floor(Math.random() * countryCodes.length)]; // Véletlenszerű országkód kiválasztása
-      const response = await import(`./images/${randomCountry}.svg`);
-
+      const response = await import(`./images/${countryCode}.svg`);
       setCurrentFlag(response.default); //  A zászló képének beállítása
     };
 
     importFlag();
-  }, []);
+  }, [countryCode]);
 
   return (
     <div>
