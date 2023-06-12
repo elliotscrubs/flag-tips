@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg id="svg8595" width="1800" height="1200" version="1.1" viewBox="0 0 18.75 12.5" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <metadata id="metadata8600">
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <g id="layer1" transform="matrix(.2645833 0 0 .2645833 368.1488 -151.1855)">
+  <rect id="rect9143" x="-1391.429" y="571.4098" width="70.86614" height="47.2441" ry="0" fill="#124086"/>
+  <rect id="rect9145" x="-1391.429" y="571.4098" width="70.86614" height="23.62205" ry="0" fill="#71d4ed"/>
+  <circle id="path9169" cx="-1355.996" cy="595.0319" r="16.53547" fill="#fcd116" stroke="#007a4d" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.36214"/>
+  <g id="g4801" transform="matrix(.06947667 0 0 .06999834 -1291.109 533.9184)" fill="#0f0f0f" shape-rendering="auto">
+   <path id="rect4752" d="m-1042.35 750.569c-10.2662 0-19.0781 8.8144-19.0781 19.0805v135.8413c0 10.2661 8.8119 19.078 19.0781 19.078h135.8413c10.2661 0 19.0804-8.8119 19.0804-19.078v-35.0531h-35.1445v14.625c0 2.7199-1.6394 4.3617-4.3593 4.3617h-94.9898c-2.7199 0-4.3617-1.6418-4.3617-4.3617v-94.9874c0-2.72 1.6418-4.3617 4.3617-4.3617h94.9898c2.7199 0 4.3593 1.6417 4.3593 4.3617v14.6273h35.1445v-35.0531c0-10.2661-8.8143-19.0805-19.0804-19.0805h-115.4132z" color="#000000" color-rendering="auto" image-rendering="auto" solid-color="#000000" style="isolation:auto;mix-blend-mode:normal;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-transform:none;white-space:normal"/>
+   <path id="path4783" d="m-961.3506 821.5694c-10.2661 0-19.078 8.8143-19.078 19.0804v135.8413c0 10.2661 8.8119 19.0781 19.078 19.0781h135.8413c10.2661 0 19.0805-8.812 19.0805-19.0781v-35.053h-35.1445v14.625c0 2.7199-1.6394 4.3616-4.3593 4.3616h-94.9898c-2.7199 0-4.3617-1.6417-4.3617-4.3616v-94.9875c0-2.7199 1.6418-4.3616 4.3617-4.3616h94.9898c2.7199 0 4.3593 1.6417 4.3593 4.3616v14.6274h35.1445v-35.0532c0-10.2661-8.8144-19.0804-19.0805-19.0804h-115.4131z" color="#000000" color-rendering="auto" image-rendering="auto" solid-color="#000000" style="isolation:auto;mix-blend-mode:normal;text-decoration-color:#000000;text-decoration-line:none;text-decoration-style:solid;text-indent:0;text-transform:none;white-space:normal"/>
+  </g>
+ </g>
+</svg>

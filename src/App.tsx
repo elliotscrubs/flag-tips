@@ -6,29 +6,25 @@ import FlagComponent from './FlagComponent';
 import DropdownMenu from './DropdownMenu.';
 import countriesData from './countries.json';
 
+const countries: { [key: string]: string } = countriesData;
+
 type Option = {
   country: string;
   isWinner: boolean | null;
 };
 
-const countries: { [key: string]: string } = countriesData;
 
 function App() {
-  const [solutionCountryCode, setSolutionCountryCode] = useState<string | null>(
-    null
-  );
+  const [solutionCountryCode, setSolutionCountryCode] = useState<string | null>(null);
 
   useEffect(() => {
-    const countryCodes = Object.keys(countries); // Országkódok (rövidített nevek) lekérése
+    const countryCodes = Object.keys(countries);  // Országkódok (rövidített nevek) lekérése
     setSolutionCountryCode(
-      countryCodes[Math.floor(Math.random() * countryCodes.length)]
-    ); // Véletlenszerű országkód kiválasztása
+      countryCodes[Math.floor(Math.random() * countryCodes.length)]);  // Véletlenszerű országkód kiválasztása
   }, []);
 
   // ez a legördülő menü
-  const [selectedOptions, setSelectedOptions] = useState<Array<Option>>(
-    Array(6).fill({ country: '', isWinner: null })
-  );
+  const [selectedOptions, setSelectedOptions] = useState<Array<Option>>(Array(6).fill({ country: '', isWinner: null }));
 
   const handleMenuChange = (value: string | null, index: number) => {
     if (value) {
@@ -51,11 +47,7 @@ function App() {
       }))
     );
 
-    /*  if (
-      selectedOptions
-        .map(option => option.country)
-        .includes(solutionCountryCode || '')
-    ) {
+    /* {
       toast.success('Great! You win! 🥳', {
         position: 'top-center',
         autoClose: 5000,
@@ -81,21 +73,18 @@ function App() {
         }
       ); 
     } */
-
-    console.log(selectedOptions);
-    console.log(solutionCountryCode);
   }
+
+
   return (
     <div
-      style={{
-        // ez a zászló css-e
+      style={{ // ez a zászló css-e
         width: '500px',
         margin: 'auto',
         textAlign: 'center',
       }}>
       <div
-        style={{
-          // ez a Flag-Tips felirat css-e
+        style={{ // ez a Flag-Tips felirat css-e
           textTransform: 'uppercase',
           fontSize: '40px',
           fontWeight: 'bold',
@@ -115,7 +104,7 @@ function App() {
         <Button // ez a Guess gomb css-e
           style={{
             color: 'black',
-            fontSize: '20px',
+            fontSize: '15px',
             fontWeight: 'bold',
             border: '3px solid rgba(0, 0, 0, 0.2)',
             background: 'grey',
