@@ -31,6 +31,19 @@ function App() {
     }
   };
 
+  function checkGuesses() { 
+    if (selectedOptions.includes(solutionCountryCode || "")) {
+      alert("You win!")       
+    } else {
+      alert("Try again!")
+    }
+  
+
+    console.log(selectedOptions)
+    console.log(solutionCountryCode)
+
+
+  }
   return (
     <div
       style={{
@@ -62,7 +75,7 @@ function App() {
             border: '3px solid rgba(0, 0, 0, 0.2)',
             background: 'grey',
           }}
-          onClick={() => {}}>
+          onClick={checkGuesses}>
           Guess
         </Button>
       </div>
