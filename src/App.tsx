@@ -1,48 +1,79 @@
 import React, { useState, useEffect } from 'react';
-import countries from './countries.json';
 import { Button } from '@mui/material';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import FlagComponent from './FlagComponent';
 import DropdownMenu from './DropdownMenu.';
+import countriesData from './countries.json';
 
+type Option = {
+  country: string;
+};
+
+const countries: { [key: string]: string } = countriesData;
 
 function App() {
-
-  const [solutionCountryCode, setSolutionCountryCode] = useState<string | null>(null);
+  const [solutionCountryCode, setSolutionCountryCode] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     const countryCodes = Object.keys(countries); // Országkódok (rövidített nevek) lekérése
-    setSolutionCountryCode(countryCodes[Math.floor(Math.random() * countryCodes.length)]);  // Véletlenszerű országkód kiválasztása
+    setSolutionCountryCode(
+      countryCodes[Math.floor(Math.random() * countryCodes.length)]
+    ); // Véletlenszerű országkód kiválasztása
   }, []);
 
-
-   // ez a legördülő menü
-   const [selectedOptions, setSelectedOptions] = useState<Array<string>>(
-    Array(6).fill('')
+  // ez a legördülő menü
+  const [selectedOptions, setSelectedOptions] = useState<Array<Option>>(
+    Array(6).fill({ country: '' })
   );
 
-  const handleMenuChange = ( value: string | null, index: number) => {
+  const handleMenuChange = (value: string | null, index: number) => {
     if (value) {
       setSelectedOptions(prevSelectedOptions => {
         const newSelectedOptions = [...prevSelectedOptions];
-        newSelectedOptions[index] = value;
+        newSelectedOptions[index].country = value;
         return newSelectedOptions;
       });
       console.log(`Selected option ${index + 1}: ${value}`);
     }
   };
 
-  function checkGuesses() { 
-    if (selectedOptions.includes(solutionCountryCode || "")) {
-      alert("You win!")       
+  function checkGuesses() {
+    if (
+      selectedOptions
+        .map(option => option.country)
+        .includes(solutionCountryCode || '')
+    ) {
+      toast.success('Great! You win! 🥳', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
     } else {
-      alert("Try again!")
+      toast.error(
+        `You lost! 😱 The solution is: ${countries[solutionCountryCode || '']}`,
+        {
+          position: 'top-center',
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        }
+      );
     }
-  
 
-    console.log(selectedOptions)
-    console.log(solutionCountryCode)
-
-
+    console.log(selectedOptions);
+    console.log(solutionCountryCode);
   }
   return (
     <div
@@ -64,8 +95,12 @@ function App() {
         }}>
         Flag - Tips
       </div>
+      <ToastContainer />
       <FlagComponent countryCode={solutionCountryCode} />
-      <DropdownMenu handleMenuChange={handleMenuChange} selectedOptions={selectedOptions} />
+      <DropdownMenu
+        handleMenuChange={handleMenuChange}
+        selectedOptions={selectedOptions}
+      />
       <div>
         <Button // ez a Guess gomb css-e
           style={{
@@ -84,3 +119,4 @@ function App() {
 }
 
 export default App;
+export type { Option };
