@@ -8,6 +8,7 @@ import countriesData from './countries.json';
 
 type Option = {
   country: string;
+  isWinner: boolean | null;
 };
 
 const countries: { [key: string]: string } = countriesData;
@@ -26,22 +27,31 @@ function App() {
 
   // ez a legördülő menü
   const [selectedOptions, setSelectedOptions] = useState<Array<Option>>(
-    Array(6).fill({ country: '' })
+    Array(6).fill({ country: '', isWinner: null })
   );
 
   const handleMenuChange = (value: string | null, index: number) => {
     if (value) {
       setSelectedOptions(prevSelectedOptions => {
         const newSelectedOptions = [...prevSelectedOptions];
-        newSelectedOptions[index].country = value;
+        newSelectedOptions[index] = {
+          country: value,
+          isWinner: newSelectedOptions[index].isWinner,
+        };
         return newSelectedOptions;
       });
-      console.log(`Selected option ${index + 1}: ${value}`);
     }
   };
 
   function checkGuesses() {
-    if (
+    setSelectedOptions(
+      selectedOptions.map(({ country, isWinner }) => ({
+        country: country,
+        isWinner: country === '' ? null : country === solutionCountryCode,
+      }))
+    );
+
+    /*  if (
       selectedOptions
         .map(option => option.country)
         .includes(solutionCountryCode || '')
@@ -57,7 +67,7 @@ function App() {
         theme: 'light',
       });
     } else {
-      toast.error(
+       toast.error(
         `You lost! 😱 The solution is: ${countries[solutionCountryCode || '']}`,
         {
           position: 'top-center',
@@ -69,8 +79,8 @@ function App() {
           progress: undefined,
           theme: 'light',
         }
-      );
-    }
+      ); 
+    } */
 
     console.log(selectedOptions);
     console.log(solutionCountryCode);

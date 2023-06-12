@@ -13,26 +13,39 @@ const DropdownMenu = ({
 }) => {
   const defaultLabel = "What's your tip?";
 
+  function renderWinnerText(isWinner: boolean | null) {
+    if (isWinner === true) {
+      return 'yes';
+    } else if (isWinner === false) {
+      return 'X';
+    } else {
+      return null;
+    }
+  }
+
   return (
     <div>
       {selectedOptions.map((selectedOption, index) => (
-        <Autocomplete
-          key={index}
-          options={Object.keys(countries)}
-          getOptionLabel={countryCode => countries[countryCode] || defaultLabel} // beállítjuk a megjelenített szöveget az országkódhoz tartozó országnév alapján
-          value={selectedOption.country}
-          onChange={(event, value) =>
-            handleMenuChange(value ? value : null, index)
-          }
-          renderInput={params => <TextField {...params} />}
-          style={{
-            color: 'black',
-            fontWeight: 'bold',
-            border: '3px solid rgba(0, 0, 0, 0.2)',
-            marginBottom: '5px',
-            marginTop: '5px',
-          }}
-        />
+        <div key={index}>
+          <Autocomplete
+            key={index}
+            options={Object.keys(countries)}
+            getOptionLabel={countryCode =>
+              countries[countryCode] || defaultLabel
+            } // beállítjuk a megjelenített szöveget az országkódhoz tartozó országnév alapján
+            value={selectedOption.country}
+            onChange={(event, value) => handleMenuChange(value, index)}
+            renderInput={params => <TextField {...params} />}
+            style={{
+              color: 'black',
+              fontWeight: 'bold',
+              border: '3px solid rgba(0, 0, 0, 0.2)',
+              marginBottom: '5px',
+              marginTop: '5px',
+            }}
+          />
+          <p>{renderWinnerText(selectedOption.isWinner)}</p>
+        </div>
       ))}
     </div>
   );
