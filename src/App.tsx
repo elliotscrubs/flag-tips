@@ -6,16 +6,30 @@ import DropdownMenu from './DropdownMenu.';
 
 
 function App() {
-  const handleMenuChange = (index: number, value: string) => {
-    // Itt kezelheted a kiválasztott országokat
-    console.log(`Selected option ${index + 1}: ${value}`);
-  };
+
   const [solutionCountryCode, setSolutionCountryCode] = useState<string | null>(null);
 
   useEffect(() => {
     const countryCodes = Object.keys(countries); // Országkódok (rövidített nevek) lekérése
     setSolutionCountryCode(countryCodes[Math.floor(Math.random() * countryCodes.length)]);  // Véletlenszerű országkód kiválasztása
   }, []);
+
+
+   // ez a legördülő menü
+   const [selectedOptions, setSelectedOptions] = useState<Array<string>>(
+    Array(6).fill('')
+  );
+
+  const handleMenuChange = ( value: string | null, index: number) => {
+    if (value) {
+      setSelectedOptions(prevSelectedOptions => {
+        const newSelectedOptions = [...prevSelectedOptions];
+        newSelectedOptions[index] = value;
+        return newSelectedOptions;
+      });
+      console.log(`Selected option ${index + 1}: ${value}`);
+    }
+  };
 
   return (
     <div
@@ -38,7 +52,7 @@ function App() {
         Flag - Tips
       </div>
       <FlagComponent countryCode={solutionCountryCode} />
-      <DropdownMenu handleMenuChange={handleMenuChange} />
+      <DropdownMenu handleMenuChange={handleMenuChange} selectedOptions={selectedOptions} />
       <div>
         <Button // ez a Guess gomb css-e
           style={{
