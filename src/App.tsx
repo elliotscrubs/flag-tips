@@ -66,10 +66,10 @@ function App() {
         progress: undefined,
         theme: 'light',
       });
-    }
+    } 
 
-    /*
-    } else {
+    // selectedOptons tömbnek minden eleme isWinner === false;
+    if (selectedOptions.pop()?.country !== solutionCountryCode) {
        toast.error(
         `You lost! 😱 The solution is: ${countries[solutionCountryCode || '']}`,
         {
@@ -83,7 +83,7 @@ function App() {
           theme: 'light',
         }
       ); 
-    } */
+    } 
   }
 
   return (
