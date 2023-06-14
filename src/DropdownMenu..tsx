@@ -1,11 +1,8 @@
 import { Autocomplete, TextField } from '@mui/material';
 import countriesData from './countries.json';
 import type { Option } from './App';
-import { css } from '@mui/material';
 
 const countries: { [key: string]: string } = countriesData; // mivel a json fájlban nincs index definiálva, ezért nem tudja használni a string kifejezést. ezért kell ez a változó.
-
-const renderWinnerText = css``;
 
 const DropdownMenu = ({
   handleMenuChange,
@@ -18,11 +15,11 @@ const DropdownMenu = ({
 
   function renderWinnerText(isWinner: boolean | null) {
     if (isWinner === true) {
-      return '✔️';
+      return ' ✔️';
     } else if (isWinner === false) {
-      return '❌';
+      return ' ❌';
     } else {
-      return null;
+      return '';
     }
   }
 
@@ -44,7 +41,7 @@ const DropdownMenu = ({
           // csak akkor legyen false, ha ez az első null a tömbben
           return false;
         } else {
-          return true
+          return true;
         }
       }
     }
@@ -58,18 +55,13 @@ const DropdownMenu = ({
   return (
     <div>
       {selectedOptions.map((selectedOption, index) => (
-        <div
-          key={index}
-          /* style={{
-          flexDirection: 'row',
-          display: 'flex'
-        }} */
-        >
+        <div key={index}>
           <Autocomplete
             key={index}
             options={eligibleCountries}
             getOptionLabel={countryCode =>
-              countries[countryCode] || defaultLabel
+              (countries[countryCode] || defaultLabel) +
+              renderWinnerText(selectedOption.isWinner)
             } // beállítjuk a megjelenített szöveget az országkódhoz tartozó országnév alapján
             value={selectedOption.country}
             disabled={isDisabled(selectedOptions, index)}
@@ -83,7 +75,6 @@ const DropdownMenu = ({
               marginTop: '5px',
             }}
           />
-          <p>{renderWinnerText(selectedOption.isWinner)}</p>
         </div>
       ))}
     </div>
