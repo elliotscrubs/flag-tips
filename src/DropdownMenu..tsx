@@ -1,14 +1,11 @@
 import { Autocomplete, TextField } from '@mui/material';
 import countriesData from './countries.json';
 import type { Option } from './App';
-import { css } from "@mui/material";
+import { css } from '@mui/material';
 
 const countries: { [key: string]: string } = countriesData; // mivel a json fájlban nincs index definiálva, ezért nem tudja használni a string kifejezést. ezért kell ez a változó.
 
-const renderWinnerText = css`
-
-  
-`
+const renderWinnerText = css``;
 
 const DropdownMenu = ({
   handleMenuChange,
@@ -30,36 +27,42 @@ const DropdownMenu = ({
   }
 
   function isDisabled(selectedOptions: Array<Option>, index: number) {
-    const isWinnerArray: Array<boolean | null> = selectedOptions.map(option => option.isWinner)
-    
-    if(isWinnerArray.includes(true)) { 
-      return true
+    const isWinnerArray: Array<boolean | null> = selectedOptions.map(
+      option => option.isWinner
+    );
+
+    if (isWinnerArray.includes(true)) {
+      return true;
     } else {
-      if(isWinnerArray[index] === false) {
-        return true
-      } else { 
-        return false
+      if (isWinnerArray[index] === false) {
+        return true;
+      } else {
+        return false;
       }
     }
-
-
-    
   }
 
+  const selectedCountries = selectedOptions.map(option => option.country);
+  const eligibleCountries = Object.keys(countries).filter(
+    country => !selectedCountries.includes(country)
+  );
 
   return (
     <div>
       {selectedOptions.map((selectedOption, index) => (
-        <div key={index} 
-        /* style={{
+        <div
+          key={index}
+          /* style={{
           flexDirection: 'row',
           display: 'flex'
         }} */
         >
           <Autocomplete
             key={index}
-            options={Object.keys(countries)}
-            getOptionLabel={countryCode => countries[countryCode] || defaultLabel} // beállítjuk a megjelenített szöveget az országkódhoz tartozó országnév alapján
+            options={eligibleCountries}
+            getOptionLabel={countryCode =>
+              countries[countryCode] || defaultLabel
+            } // beállítjuk a megjelenített szöveget az országkódhoz tartozó országnév alapján
             value={selectedOption.country}
             disabled={isDisabled(selectedOptions, index)}
             onChange={(event, value) => handleMenuChange(value, index)}
