@@ -15,20 +15,51 @@ type Option = {
 
 function App() {
   const [solutionCountryCode, setSolutionCountryCode] = useState<string | null>(
-    null
+    () => {
+      const savedSolutionCountryCode = localStorage.getItem(
+        'flagTips-solutionCountryCode'
+      );
+      const initialSolutionCountryCode = JSON.parse(
+        savedSolutionCountryCode || ''
+      );
+
+      if (initialSolutionCountryCode) {
+        return initialSolutionCountryCode;
+      } else {
+        const countryCodes = Object.keys(countries); // Országkódok (rövidített nevek) lekérése
+        return countryCodes[Math.floor(Math.random() * countryCodes.length)]; // Véletlenszerű országkód kiválasztása
+      }
+    }
   );
 
   useEffect(() => {
-    const countryCodes = Object.keys(countries); // Országkódok (rövidített nevek) lekérése
-    setSolutionCountryCode(
-      countryCodes[Math.floor(Math.random() * countryCodes.length)]
-    ); // Véletlenszerű országkód kiválasztása
-  }, []);
+    localStorage.setItem(
+      'flagTips-solutionCountryCode',
+      JSON.stringify(solutionCountryCode)
+    );
+  }, [solutionCountryCode]);
 
-  // ez a legördülő menü
-  const [selectedOptions, setSelectedOptions] = useState<Array<Option>>(
-    Array(6).fill({ country: '', isWinner: null })
-  );
+  const [selectedOptions, setSelectedOptions] = useState<Array<Option>>(() => {
+    const savedSelectedOptions= localStorage.getItem(
+      'flagTips-selectedOptions'
+    );
+    const initialSelectedOptions = JSON.parse(
+      savedSelectedOptions || ''
+    );
+
+    if (initialSelectedOptions) {
+      return initialSelectedOptions;
+    } else {
+      return Array(6).fill({ country: '', isWinner: null });
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(
+      'flagTips-selectedOptions',
+      JSON.stringify(selectedOptions)
+    );
+  }, [selectedOptions]);
 
   const handleMenuChange = (value: string | null, index: number) => {
     if (value) {
