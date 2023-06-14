@@ -30,10 +30,12 @@ const DropdownMenu = ({
   }
 
   function isDisabled(selectedOptions: Array<Option>, index: number) {
-    if(selectedOptions.find(option => option.isWinner === true)) { 
+    const isWinnerArray: Array<boolean | null> = selectedOptions.map(option => option.isWinner)
+    
+    if(isWinnerArray.includes(true)) { 
       return true
     } else {
-      if(selectedOptions[index].isWinner === false) {
+      if(isWinnerArray[index] === false) {
         return true
       } else { 
         return false
