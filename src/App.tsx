@@ -13,18 +13,22 @@ type Option = {
   isWinner: boolean | null;
 };
 
-
 function App() {
-  const [solutionCountryCode, setSolutionCountryCode] = useState<string | null>(null);
+  const [solutionCountryCode, setSolutionCountryCode] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
-    const countryCodes = Object.keys(countries);  // Országkódok (rövidített nevek) lekérése
+    const countryCodes = Object.keys(countries); // Országkódok (rövidített nevek) lekérése
     setSolutionCountryCode(
-      countryCodes[Math.floor(Math.random() * countryCodes.length)]);  // Véletlenszerű országkód kiválasztása
+      countryCodes[Math.floor(Math.random() * countryCodes.length)]
+    ); // Véletlenszerű országkód kiválasztása
   }, []);
 
   // ez a legördülő menü
-  const [selectedOptions, setSelectedOptions] = useState<Array<Option>>(Array(6).fill({ country: '', isWinner: null }));
+  const [selectedOptions, setSelectedOptions] = useState<Array<Option>>(
+    Array(6).fill({ country: '', isWinner: null })
+  );
 
   const handleMenuChange = (value: string | null, index: number) => {
     if (value) {
@@ -47,7 +51,11 @@ function App() {
       }))
     );
 
-    /* {
+    if (
+      selectedOptions
+        .map(option => option.country)
+        .includes(solutionCountryCode || '')
+    ) {
       toast.success('Great! You win! 🥳', {
         position: 'top-center',
         autoClose: 5000,
@@ -58,6 +66,9 @@ function App() {
         progress: undefined,
         theme: 'light',
       });
+    }
+
+    /*
     } else {
        toast.error(
         `You lost! 😱 The solution is: ${countries[solutionCountryCode || '']}`,
@@ -75,16 +86,17 @@ function App() {
     } */
   }
 
-
   return (
     <div
-      style={{ // ez a zászló css-e
+      style={{
+        // ez a zászló css-e
         width: '500px',
         margin: 'auto',
         textAlign: 'center',
       }}>
       <div
-        style={{ // ez a Flag-Tips felirat css-e
+        style={{
+          // ez a Flag-Tips felirat css-e
           textTransform: 'uppercase',
           fontSize: '40px',
           fontWeight: 'bold',

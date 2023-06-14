@@ -6,6 +6,7 @@ import { css } from "@mui/material";
 const countries: { [key: string]: string } = countriesData; // mivel a json fájlban nincs index definiálva, ezért nem tudja használni a string kifejezést. ezért kell ez a változó.
 
 const renderWinnerText = css`
+
   
 `
 
@@ -28,15 +29,37 @@ const DropdownMenu = ({
     }
   }
 
+  function isDisabled(selectedOptions: Array<Option>, index: number) {
+    if(selectedOptions.find(option => option.isWinner === true)) { 
+      return true
+    } else {
+      if(selectedOptions[index].isWinner === false) {
+        return true
+      } else { 
+        return false
+      }
+    }
+
+
+    
+  }
+
+
   return (
     <div>
       {selectedOptions.map((selectedOption, index) => (
-        <div key={index}>
+        <div key={index} 
+        /* style={{
+          flexDirection: 'row',
+          display: 'flex'
+        }} */
+        >
           <Autocomplete
             key={index}
             options={Object.keys(countries)}
             getOptionLabel={countryCode => countries[countryCode] || defaultLabel} // beállítjuk a megjelenített szöveget az országkódhoz tartozó országnév alapján
             value={selectedOption.country}
+            disabled={isDisabled(selectedOptions, index)}
             onChange={(event, value) => handleMenuChange(value, index)}
             renderInput={params => <TextField {...params} />}
             style={{
