@@ -66,11 +66,14 @@ function App() {
         progress: undefined,
         theme: 'light',
       });
-    } 
+    }
 
-    // selectedOptons tömbnek minden eleme isWinner === false;
-    if (selectedOptions.pop()?.country !== solutionCountryCode) {
-       toast.error(
+    const lastCountry: string = selectedOptions.pop()?.country || '';
+    const notSuccess: boolean = lastCountry !== solutionCountryCode;
+    const notEmpty: boolean = lastCountry !== '';
+
+    if (notSuccess && notEmpty) {
+      toast.error(
         `You lost! 😱 The solution is: ${countries[solutionCountryCode || '']}`,
         {
           position: 'top-center',
@@ -82,8 +85,8 @@ function App() {
           progress: undefined,
           theme: 'light',
         }
-      ); 
-    } 
+      );
+    }
   }
 
   return (

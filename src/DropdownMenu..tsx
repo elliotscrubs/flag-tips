@@ -37,7 +37,15 @@ const DropdownMenu = ({
       if (isWinnerArray[index] === false) {
         return true;
       } else {
-        return false;
+        const firstNullIsWinnerIndex: number | null = isWinnerArray.findIndex(
+          isWinner => isWinner === null
+        );
+        if (firstNullIsWinnerIndex === index) {
+          // csak akkor legyen false, ha ez az első null a tömbben
+          return false;
+        } else {
+          return true
+        }
       }
     }
   }
