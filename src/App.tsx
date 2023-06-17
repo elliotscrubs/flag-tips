@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Button } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -13,50 +13,88 @@ type Option = {
   isWinner: boolean | null;
 };
 
+function currentDate() {
+  const date = new Date(); // megadjuk aa mostani dátumot
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  return `${day}-${month}-${year}`;
+}
+
 function App() {
-  const [solutionCountryCode, setSolutionCountryCode] = useState<string | null>(
-    () => {
-      const savedSolutionCountryCode = localStorage.getItem(
-        'flagTips-solutionCountryCode'
-      );
-      const initialSolutionCountryCode = JSON.parse(
-        savedSolutionCountryCode || ''
-      );
+  const localStorageLastUsedDateLabel = 'flagTips-lastUsedDate';
+  const localStorageSolutionCountryCodeLabel = 'flagTips-solutionCountryCode';
+  const localStorageSelectedOptionsLabel = 'flagTips-selectedOptions';
 
-      if (initialSolutionCountryCode) {
-        return initialSolutionCountryCode;
-      } else {
-        const countryCodes = Object.keys(countries); // Országkódok (rövidített nevek) lekérése
-        return countryCodes[Math.floor(Math.random() * countryCodes.length)]; // Véletlenszerű országkód kiválasztása
-      }
-    }
-  );
+  const isCleanSheet = useMemo<boolean>(() => {
+    const savedLastUsedDate =
+      localStorage.getItem(localStorageLastUsedDateLabel) || '{}';
 
-  useEffect(() => {
+    const lastUsedDate = JSON.parse(savedLastUsedDate);
     localStorage.setItem(
-      'flagTips-solutionCountryCode',
-      JSON.stringify(solutionCountryCode)
+      localStorageLastUsedDateLabel,
+      JSON.stringify(currentDate())
     );
-  }, [solutionCountryCode]);
+
+    if (lastUsedDate !== currentDate()) {
+      return true;
+    } else {
+      return false;
+    }
+  }, []);
+
+  const solutionCountryCode = useMemo<string>(() => {
+    const savedSolutionCountryCode = localStorage.getItem(
+      localStorageSolutionCountryCodeLabel
+    );
+
+    const initialSolutionCountryCode = savedSolutionCountryCode
+      ? JSON.parse(savedSolutionCountryCode)
+      : undefined;
+
+    if (!isCleanSheet && initialSolutionCountryCode) {
+      return initialSolutionCountryCode;
+    } else {
+      const countryCodes = Object.keys(countries); // Országkódok (rövidített nevek) lekérése
+      const randomCountryCode =
+        countryCodes[Math.floor(Math.random() * countryCodes.length)];
+
+      localStorage.setItem(
+        localStorageSolutionCountryCodeLabel,
+        JSON.stringify(randomCountryCode)
+      );
+      return randomCountryCode; // Véletlenszerű országkód kiválasztása
+    }
+  }, [isCleanSheet]);
 
   const [selectedOptions, setSelectedOptions] = useState<Array<Option>>(() => {
-    const savedSelectedOptions= localStorage.getItem(
-      'flagTips-selectedOptions'
-    );
-    const initialSelectedOptions = JSON.parse(
-      savedSelectedOptions || ''
-    );
+    const defaultOptions: Array<Option> = Array(6).fill({
+      country: '',
+      isWinner: null,
+    });
 
-    if (initialSelectedOptions) {
+    const savedSelectedOptions = localStorage.getItem(
+      localStorageSelectedOptionsLabel
+    );
+    const initialSelectedOptions = savedSelectedOptions
+      ? JSON.parse(savedSelectedOptions)
+      : defaultOptions;
+
+    if (!isCleanSheet && initialSelectedOptions) {
       return initialSelectedOptions;
     } else {
-      return Array(6).fill({ country: '', isWinner: null });
+      localStorage.setItem(
+        localStorageSelectedOptionsLabel,
+        JSON.stringify(defaultOptions)
+      );
+      return defaultOptions;
     }
   });
 
   useEffect(() => {
     localStorage.setItem(
-      'flagTips-selectedOptions',
+      localStorageSelectedOptionsLabel,
       JSON.stringify(selectedOptions)
     );
   }, [selectedOptions]);

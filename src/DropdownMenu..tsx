@@ -2,7 +2,7 @@ import { Autocomplete, TextField } from '@mui/material';
 import countriesData from './countries.json';
 import type { Option } from './App';
 
-const countries: { [key: string]: string } = countriesData; // mivel a json fájlban nincs index definiálva, ezért nem tudja használni a string kifejezést. ezért kell ez a változó.
+const countries: { [key: string]: string } = countriesData; //a json fájlban nincs index definiálva, ezért nem tudja használni a string kifejezést. ezért kell ez a változó.
 
 const DropdownMenu = ({
   handleMenuChange,
@@ -47,6 +47,7 @@ const DropdownMenu = ({
     }
   }
 
+
   const selectedCountries = selectedOptions.map(option => option.country);
   const eligibleCountries = Object.keys(countries).filter(
     country => !selectedCountries.includes(country)
@@ -62,7 +63,7 @@ const DropdownMenu = ({
             getOptionLabel={countryCode =>
               (countries[countryCode] || defaultLabel) +
               renderWinnerText(selectedOption.isWinner)
-            } // beállítjuk a megjelenített szöveget az országkódhoz tartozó országnév alapján
+            }
             value={selectedOption.country}
             disabled={isDisabled(selectedOptions, index)}
             onChange={(event, value) => handleMenuChange(value, index)}
