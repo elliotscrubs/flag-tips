@@ -192,9 +192,21 @@ function App() {
             fontWeight: 'bold',
             border: '3px solid rgba(0, 0, 0, 0.2)',
             background: 'grey',
+            float: 'left'
           }}
           onClick={checkGuesses}>
           Guess
+        </Button>
+        <Button // ez a Next gomb css-e
+          style={{
+            color: 'black',
+            fontSize: '15px',
+            fontWeight: 'bold',
+            border: '3px solid rgba(0, 0, 0, 0.2)',
+            background: 'grey',
+            float: 'right'
+          }}>
+          Next
         </Button>
       </div>
     </div>
