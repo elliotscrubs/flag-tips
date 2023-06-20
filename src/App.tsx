@@ -27,12 +27,12 @@ function App() {
   const localStorageSolutionCountryCodeLabel = 'flagTips-solutionCountryCode';
   const localStorageSelectedOptionsLabel = 'flagTips-selectedOptions';
 
-  const isCleanSheet = useMemo<boolean>(() => {
+  const [isCleanSheet, setIsCleanSheet] = useState<boolean>(() => {
     const savedLastUsedDate =
       localStorage.getItem(localStorageLastUsedDateLabel) || '{}';
 
     const lastUsedDate = JSON.parse(savedLastUsedDate);
-    localStorage.setItem(
+      localStorage.setItem(
       localStorageLastUsedDateLabel,
       JSON.stringify(currentDate())
     );
@@ -42,7 +42,7 @@ function App() {
     } else {
       return false;
     }
-  }, []);
+  });
 
   const solutionCountryCode = useMemo<string>(() => {
     const savedSolutionCountryCode = localStorage.getItem(
@@ -64,16 +64,19 @@ function App() {
         localStorageSolutionCountryCodeLabel,
         JSON.stringify(randomCountryCode)
       );
+      setIsCleanSheet(false);
       return randomCountryCode; // Véletlenszerű országkód kiválasztása
     }
   }, [isCleanSheet]);
 
-  const [selectedOptions, setSelectedOptions] = useState<Array<Option>>(() => {
-    const defaultOptions: Array<Option> = Array(6).fill({
-      country: '',
-      isWinner: null,
-    });
 
+  const defaultOptions: Array<Option> = Array(6).fill({
+    country: '',
+    isWinner: null,
+  });
+
+  const [selectedOptions, setSelectedOptions] = useState<Array<Option>>(() => {
+    
     const savedSelectedOptions = localStorage.getItem(
       localStorageSelectedOptionsLabel
     );
@@ -158,6 +161,11 @@ function App() {
     }
   }
 
+  function getNextFlag() {
+    setIsCleanSheet(true)
+    setSelectedOptions(defaultOptions)
+  }
+
   return (
     <div
       style={{
@@ -192,7 +200,7 @@ function App() {
             fontWeight: 'bold',
             border: '3px solid rgba(0, 0, 0, 0.2)',
             background: 'grey',
-            float: 'left'
+            float: 'left',
           }}
           onClick={checkGuesses}>
           Guess
@@ -204,8 +212,10 @@ function App() {
             fontWeight: 'bold',
             border: '3px solid rgba(0, 0, 0, 0.2)',
             background: 'grey',
-            float: 'right'
-          }}>
+            float: 'right',
+          }}
+          onClick={getNextFlag}
+          >
           Next
         </Button>
       </div>
