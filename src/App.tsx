@@ -26,13 +26,14 @@ function App() {
   const localStorageLastUsedDateLabel = 'flagTips-lastUsedDate';
   const localStorageSolutionCountryCodeLabel = 'flagTips-solutionCountryCode';
   const localStorageSelectedOptionsLabel = 'flagTips-selectedOptions';
+  const localStorageGameCountLabel = 'flag-tips-gameCount';
 
   const [isCleanSheet, setIsCleanSheet] = useState<boolean>(() => {
     const savedLastUsedDate =
       localStorage.getItem(localStorageLastUsedDateLabel) || '{}';
 
     const lastUsedDate = JSON.parse(savedLastUsedDate);
-      localStorage.setItem(
+    localStorage.setItem(
       localStorageLastUsedDateLabel,
       JSON.stringify(currentDate())
     );
@@ -43,6 +44,30 @@ function App() {
       return false;
     }
   });
+
+  // számoljuk a játékokat, mert egy nap csak 5-ször lehet játszani
+  const [gameCount, setGameCount] = useState<number>(() => {
+    // ha először nyitja meg az oldalt, akkor 0; egyébként annyi amennyit már játszott aznap
+
+    const savedGameCount = localStorage.getItem(localStorageGameCountLabel);
+
+    console.log('savedGameCount');
+    console.log(savedGameCount);
+
+    const initialGameCount = savedGameCount ? JSON.parse(savedGameCount) : 1;
+
+    // játszott-e már aznap vagy nem
+    if (!isCleanSheet && initialGameCount) {
+      return initialGameCount;
+    } else {
+      localStorage.setItem(localStorageGameCountLabel, JSON.stringify(1));
+      return 1; // alap érték
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem(localStorageGameCountLabel, JSON.stringify(gameCount));
+  }, [gameCount]);
 
   const solutionCountryCode = useMemo<string>(() => {
     const savedSolutionCountryCode = localStorage.getItem(
@@ -69,14 +94,12 @@ function App() {
     }
   }, [isCleanSheet]);
 
-
   const defaultOptions: Array<Option> = Array(6).fill({
     country: '',
     isWinner: null,
   });
 
   const [selectedOptions, setSelectedOptions] = useState<Array<Option>>(() => {
-    
     const savedSelectedOptions = localStorage.getItem(
       localStorageSelectedOptionsLabel
     );
@@ -130,7 +153,7 @@ function App() {
     ) {
       toast.success('Great! You win! 🥳', {
         position: 'top-center',
-        autoClose: 5000,
+        autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
@@ -149,7 +172,7 @@ function App() {
         `You lost! 😱 The solution is: ${countries[solutionCountryCode || '']}`,
         {
           position: 'top-center',
-          autoClose: 5000,
+          autoClose: 4000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
@@ -162,8 +185,22 @@ function App() {
   }
 
   function getNextFlag() {
-    setIsCleanSheet(true)
-    setSelectedOptions(defaultOptions)
+    if (gameCount < 5) {
+      setGameCount(gameCount + 1);
+      setIsCleanSheet(true);
+      setSelectedOptions(defaultOptions);
+    } else if (gameCount >= 4) {
+      toast.info('You have played 5 games today. Come back tomorrow! 😉', {
+        position: 'top-center',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark',
+      });
+    }
   }
 
   return (
@@ -205,6 +242,7 @@ function App() {
           onClick={checkGuesses}>
           Guess
         </Button>
+        <p>{gameCount} / 5 </p>
         <Button // ez a Next gomb css-e
           style={{
             color: 'black',
@@ -213,9 +251,9 @@ function App() {
             border: '3px solid rgba(0, 0, 0, 0.2)',
             background: 'grey',
             float: 'right',
+
           }}
-          onClick={getNextFlag}
-          >
+          onClick={getNextFlag}>
           Next
         </Button>
       </div>
