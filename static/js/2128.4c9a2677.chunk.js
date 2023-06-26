@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkflag_tips=self.webpackChunkflag_tips||[]).push([[2128],{2128:function(s,e,t){s.exports=t.p+"static/media/nato.90f17de393ce95667587.svg"}}]);

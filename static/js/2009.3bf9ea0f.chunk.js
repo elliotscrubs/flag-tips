@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkflag_tips=self.webpackChunkflag_tips||[]).push([[2009],{2009:function(a,s,e){a.exports=e.p+"static/media/caricom.73a8ae8addb38961674e.svg"}}]);
