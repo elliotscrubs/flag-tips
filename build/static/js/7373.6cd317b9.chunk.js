@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkflag_tips=self.webpackChunkflag_tips||[]).push([[7373],{7373:function(s,c,t){s.exports=t.p+"static/media/mc.18b2c7d8f20183ac077d.svg"}}]);

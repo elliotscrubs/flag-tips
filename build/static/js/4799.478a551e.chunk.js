@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkflag_tips=self.webpackChunkflag_tips||[]).push([[4799],{4799:function(e,s,a){e.exports=a.p+"static/media/arabLeague.2d3248fde667de457c86.svg"}}]);

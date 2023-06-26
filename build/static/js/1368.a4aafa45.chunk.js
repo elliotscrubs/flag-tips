@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkflag_tips=self.webpackChunkflag_tips||[]).push([[1368],{1368:function(s,e,f){s.exports=f.p+"static/media/africanUnio.5fbe793b5288edf0f280.svg"}}]);
