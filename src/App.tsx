@@ -28,7 +28,7 @@ function App() {
   const localStorageSelectedOptionsLabel = 'flagTips-selectedOptions';
   const localStorageGameCountLabel = 'flag-tips-gameCount';
 
-  const [isCleanSheet, setIsCleanSheet] = useState<boolean>(() => {
+  const [isCleanSheet, setIsCleanSheet] = useState<boolean>(() => { // nullázzon le mindent, ha új nap van
     const savedLastUsedDate =
       localStorage.getItem(localStorageLastUsedDateLabel) || '{}';
 
@@ -50,10 +50,6 @@ function App() {
     // ha először nyitja meg az oldalt, akkor 0; egyébként annyi amennyit már játszott aznap
 
     const savedGameCount = localStorage.getItem(localStorageGameCountLabel);
-
-    console.log('savedGameCount');
-    console.log(savedGameCount);
-
     const initialGameCount = savedGameCount ? JSON.parse(savedGameCount) : 1;
 
     // játszott-e már aznap vagy nem
@@ -242,7 +238,19 @@ function App() {
           onClick={checkGuesses}>
           Guess
         </Button>
-        <p>{gameCount} / 5 </p>
+        <p
+          style={{
+            color: 'black',
+            fontSize: '20px',
+            fontWeight: 'bold',
+            border: '3px solid rgba(0, 0, 0, 0.2)',
+            background: 'white',
+            float: 'right',
+            margin: '0',
+            borderRadius: '4px',
+          }}>
+          {gameCount} / 5
+        </p>
         <Button // ez a Next gomb css-e
           style={{
             color: 'black',
@@ -250,8 +258,6 @@ function App() {
             fontWeight: 'bold',
             border: '3px solid rgba(0, 0, 0, 0.2)',
             background: 'grey',
-            float: 'right',
-
           }}
           onClick={getNextFlag}>
           Next
