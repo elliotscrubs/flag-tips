@@ -11,8 +11,6 @@ const DropdownMenu = ({
   handleMenuChange: (value: string | null, index: number) => void;
   selectedOptions: Array<Option>;
 }) => {
-  const defaultLabel = "What's your tip?";
-
   function renderWinnerText(isWinner: boolean | null) {
     if (isWinner === true) {
       return ' ✔️';
@@ -24,6 +22,7 @@ const DropdownMenu = ({
   }
 
   function isDisabled(selectedOptions: Array<Option>, index: number) {
+    // disabled lesz az a sor, amibe már írtál. mindig az aktuális sorba lehet írni
     const isWinnerArray: Array<boolean | null> = selectedOptions.map(
       option => option.isWinner
     );
@@ -38,7 +37,6 @@ const DropdownMenu = ({
           isWinner => isWinner === null
         );
         if (firstNullIsWinnerIndex === index) {
-          // csak akkor legyen false, ha ez az első null a tömbben
           return false;
         } else {
           return true;
@@ -46,7 +44,6 @@ const DropdownMenu = ({
       }
     }
   }
-
 
   const selectedCountries = selectedOptions.map(option => option.country);
   const eligibleCountries = Object.keys(countries).filter(
@@ -61,7 +58,7 @@ const DropdownMenu = ({
             key={index}
             options={eligibleCountries}
             getOptionLabel={countryCode =>
-              (countries[countryCode] || defaultLabel) +
+              (countries[countryCode] || '') +
               renderWinnerText(selectedOption.isWinner)
             }
             value={selectedOption.country}
@@ -69,6 +66,7 @@ const DropdownMenu = ({
             onChange={(event, value) => handleMenuChange(value, index)}
             renderInput={params => <TextField {...params} />}
             style={{
+              // legördülő menü csse
               color: 'black',
               fontWeight: 'bold',
               border: '3px solid rgba(0, 0, 0, 0.2)',

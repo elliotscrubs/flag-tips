@@ -28,7 +28,8 @@ function App() {
   const localStorageSelectedOptionsLabel = 'flagTips-selectedOptions';
   const localStorageGameCountLabel = 'flag-tips-gameCount';
 
-  const [isCleanSheet, setIsCleanSheet] = useState<boolean>(() => { // nullázzon le mindent, ha új nap van
+  const [isCleanSheet, setIsCleanSheet] = useState<boolean>(() => {
+    // nullázzon le mindent, ha új nap van
     const savedLastUsedDate =
       localStorage.getItem(localStorageLastUsedDateLabel) || '{}';
 
@@ -225,7 +226,7 @@ function App() {
         handleMenuChange={handleMenuChange}
         selectedOptions={selectedOptions}
       />
-      <div>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Button // ez a Guess gomb css-e
           style={{
             color: 'black',
@@ -233,24 +234,20 @@ function App() {
             fontWeight: 'bold',
             border: '3px solid rgba(0, 0, 0, 0.2)',
             background: 'grey',
-            float: 'left',
+            marginLeft: '20px',
           }}
           onClick={checkGuesses}>
           Guess
         </Button>
-        <p
+        <div
           style={{
             color: 'black',
             fontSize: '20px',
             fontWeight: 'bold',
-            border: '3px solid rgba(0, 0, 0, 0.2)',
-            background: 'white',
-            float: 'right',
-            margin: '0',
-            borderRadius: '4px',
+            padding: '10px'
           }}>
           {gameCount} / 5
-        </p>
+        </div>
         <Button // ez a Next gomb css-e
           style={{
             color: 'black',
@@ -258,6 +255,7 @@ function App() {
             fontWeight: 'bold',
             border: '3px solid rgba(0, 0, 0, 0.2)',
             background: 'grey',
+            marginRight: '20px',
           }}
           onClick={getNextFlag}>
           Next
