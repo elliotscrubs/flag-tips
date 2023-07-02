@@ -6,9 +6,11 @@ const countries: { [key: string]: string } = countriesData; //a json fájlban ni
 
 const DropdownMenu = ({
   handleMenuChange,
+  handleKeyDown,
   selectedOptions,
 }: {
   handleMenuChange: (value: string | null, index: number) => void;
+  handleKeyDown: (event: React.KeyboardEvent<HTMLDivElement>) => void;
   selectedOptions: Array<Option>;
 }) => {
   function renderWinnerText(isWinner: boolean | null) {
@@ -64,6 +66,7 @@ const DropdownMenu = ({
             value={selectedOption.country}
             disabled={isDisabled(selectedOptions, index)}
             onChange={(event, value) => handleMenuChange(value, index)}
+            onKeyDown={handleKeyDown}
             renderInput={params => <TextField {...params} />}
             style={{
               // legördülő menü csse

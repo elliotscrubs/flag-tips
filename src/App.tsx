@@ -135,6 +135,17 @@ function App() {
     }
   };
 
+
+
+  const handleKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>
+    ) => {
+    if (event.key === 'Enter') {
+      checkGuesses()
+    }
+  };
+    
+  
   function checkGuesses() {
     setSelectedOptions(
       selectedOptions.map(({ country, isWinner }) => ({
@@ -224,6 +235,7 @@ function App() {
       <FlagComponent countryCode={solutionCountryCode} />
       <DropdownMenu
         handleMenuChange={handleMenuChange}
+        handleKeyDown={handleKeyDown}
         selectedOptions={selectedOptions}
       />
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
