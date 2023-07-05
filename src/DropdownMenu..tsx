@@ -24,7 +24,6 @@ const DropdownMenu = ({
   }
 
   function isDisabled(selectedOptions: Array<Option>, index: number) {
-    // disabled lesz az a sor, amibe már írtál. mindig az aktuális sorba lehet írni
     const isWinnerArray: Array<boolean | null> = selectedOptions.map(
       option => option.isWinner
     );
@@ -65,9 +64,18 @@ const DropdownMenu = ({
             }
             value={selectedOption.country}
             disabled={isDisabled(selectedOptions, index)}
-            onChange={(event, value) => handleMenuChange(value, index)}
+            onChange={(event, value) => {
+              handleMenuChange(value, index);
+            }}
             onKeyDown={handleKeyDown}
-            renderInput={params => <TextField {...params} />}
+            renderInput={params => (
+              <TextField
+                inputRef={input =>
+                  input && !isDisabled(selectedOptions, index) && input.focus()
+                }
+                {...params}
+              />
+            )}
             style={{
               // legördülő menü csse
               color: 'black',

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, createRef } from 'react';
 import { Button } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -135,17 +135,12 @@ function App() {
     }
   };
 
-
-
-  const handleKeyDown = (
-    event: React.KeyboardEvent<HTMLDivElement>
-    ) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') {
-      checkGuesses()
+      checkGuesses();
     }
   };
-    
-  
+
   function checkGuesses() {
     setSelectedOptions(
       selectedOptions.map(({ country, isWinner }) => ({
@@ -238,7 +233,12 @@ function App() {
         handleKeyDown={handleKeyDown}
         selectedOptions={selectedOptions}
       />
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
         <Button // ez a Guess gomb css-e
           style={{
             color: 'black',
@@ -256,7 +256,7 @@ function App() {
             color: 'black',
             fontSize: '20px',
             fontWeight: 'bold',
-            padding: '10px'
+            padding: '10px',
           }}>
           {gameCount} / 5
         </div>
