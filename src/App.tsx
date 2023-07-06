@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useMemo, createRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Button } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import FlagComponent from './FlagComponent';
-import DropdownMenu from './DropdownMenu.';
+import DropdownMenu from './DropdownMenu';
 import countriesData from './countries.json';
+import Result from './Result';
 
 const countries: { [key: string]: string } = countriesData;
 
@@ -23,6 +24,8 @@ function currentDate() {
 }
 
 function App() {
+  const [score, setScore] = useState(0);
+
   const localStorageLastUsedDateLabel = 'flagTips-lastUsedDate';
   const localStorageSolutionCountryCodeLabel = 'flagTips-solutionCountryCode';
   const localStorageSelectedOptionsLabel = 'flagTips-selectedOptions';
@@ -156,7 +159,7 @@ function App() {
     ) {
       toast.success('Great! You win! 🥳', {
         position: 'top-center',
-        autoClose: 3000,
+        autoClose: 2000,
         hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
@@ -164,6 +167,7 @@ function App() {
         progress: undefined,
         theme: 'light',
       });
+      setScore(score + 1)
     }
 
     const lastCountry: string = selectedOptions.pop()?.country || '';
@@ -175,7 +179,7 @@ function App() {
         `You lost! 😱 The solution is: ${countries[solutionCountryCode || '']}`,
         {
           position: 'top-center',
-          autoClose: 4000,
+          autoClose: 2000,
           hideProgressBar: true,
           closeOnClick: true,
           pauseOnHover: true,
@@ -188,14 +192,14 @@ function App() {
   }
 
   function getNextFlag() {
-    if (gameCount < 5) {
+    if (gameCount < 6) {
       setGameCount(gameCount + 1);
       setIsCleanSheet(true);
       setSelectedOptions(defaultOptions);
-    } else if (gameCount >= 4) {
+    } else if (gameCount > 5) {
       toast.info('You have played 5 games today. Come back tomorrow! 😉', {
         position: 'top-center',
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -206,7 +210,9 @@ function App() {
     }
   }
 
-  return (
+  return gameCount === 6 ? (
+    <Result score={score}  />
+   ) : ( 
     <div
       style={{
         // ez a zászló css-e
@@ -271,11 +277,12 @@ function App() {
           }}
           onClick={getNextFlag}>
           Next
-        </Button>
+        </Button>        
       </div>
     </div>
   );
 }
+
 
 export default App;
 export type { Option };
