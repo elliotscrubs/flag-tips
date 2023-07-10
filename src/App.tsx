@@ -14,7 +14,14 @@ type Option = {
   isWinner: boolean | null;
 };
 
-function currentDate() {
+type History = {
+  solutionCountryCode: string; // megoldás
+  selectedOptions: Array<Option>; // válaszlehetőségek
+  date: Date; 
+  gameCount: number; 
+};
+
+function currentDate() { 
   const date = new Date(); // megadjuk aa mostani dátumot
   const day = date.getDate();
   const month = date.getMonth() + 1;
@@ -24,15 +31,14 @@ function currentDate() {
 }
 
 function App() {
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState(0); // számoljuk az 5 játékból mennyit talált el 
 
   const localStorageLastUsedDateLabel = 'flagTips-lastUsedDate';
   const localStorageSolutionCountryCodeLabel = 'flagTips-solutionCountryCode';
   const localStorageSelectedOptionsLabel = 'flagTips-selectedOptions';
   const localStorageGameCountLabel = 'flag-tips-gameCount';
 
-  const [isCleanSheet, setIsCleanSheet] = useState<boolean>(() => {
-    // nullázzon le mindent, ha új nap van
+  const [isCleanSheet, setIsCleanSheet] = useState<boolean>(() => { // nullázzon le mindent, ha új nap van
     const savedLastUsedDate =
       localStorage.getItem(localStorageLastUsedDateLabel) || '{}';
 
@@ -167,7 +173,7 @@ function App() {
         progress: undefined,
         theme: 'light',
       });
-      setScore(score + 1)
+      setScore(score + 1);
     }
 
     const lastCountry: string = selectedOptions.pop()?.country || '';
@@ -196,23 +202,12 @@ function App() {
       setGameCount(gameCount + 1);
       setIsCleanSheet(true);
       setSelectedOptions(defaultOptions);
-    } else if (gameCount > 5) {
-      toast.info('You have played 5 games today. Come back tomorrow! 😉', {
-        position: 'top-center',
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'dark',
-      });
     }
   }
 
   return gameCount === 6 ? (
-    <Result score={score}  />
-   ) : ( 
+    <Result score={score} />
+  ) : (
     <div
       style={{
         // ez a zászló css-e
@@ -220,17 +215,38 @@ function App() {
         margin: 'auto',
         textAlign: 'center',
       }}>
-      <div
-        style={{
-          // ez a Flag-Tips felirat css-e
-          textTransform: 'uppercase',
-          fontSize: '40px',
-          fontWeight: 'bold',
-          borderBottom: '2px solid rgba(0, 0, 0, 0.11)',
-          marginBottom: '10px',
-          padding: '10px 0',
-        }}>
-        Flag - Tips
+      <div>
+        <div // flag-tips és history gomb közös divje
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
+          <Button
+            style={{
+              color: 'black',
+              fontSize: '10px',
+              fontWeight: 'bold',
+              border: '3px solid rgba(0, 0, 0, 0.2)',
+              background: 'grey',
+              marginLeft: '30px'
+            }}>
+            History
+          </Button>
+          <div
+            style={{
+              // ez a Flag-Tips felirat css-e
+              textTransform: 'uppercase',
+              fontSize: '40px',
+              fontWeight: 'bold',
+              borderBottom: '2px solid rgba(0, 0, 0, 0.11)',
+              marginBottom: '10px',
+              padding: '10px 0',
+              marginRight: '30px'
+            }}>
+            Flag - Tips
+          </div>
+        </div>
       </div>
       <ToastContainer />
       <FlagComponent countryCode={solutionCountryCode} />
@@ -252,7 +268,7 @@ function App() {
             fontWeight: 'bold',
             border: '3px solid rgba(0, 0, 0, 0.2)',
             background: 'grey',
-            marginLeft: '20px',
+            marginLeft: '30px',
           }}
           onClick={checkGuesses}>
           Guess
@@ -273,16 +289,15 @@ function App() {
             fontWeight: 'bold',
             border: '3px solid rgba(0, 0, 0, 0.2)',
             background: 'grey',
-            marginRight: '20px',
+            marginRight: '30px',
           }}
           onClick={getNextFlag}>
           Next
-        </Button>        
+        </Button>
       </div>
     </div>
   );
 }
-
 
 export default App;
 export type { Option };

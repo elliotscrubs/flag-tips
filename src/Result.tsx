@@ -7,7 +7,6 @@ const Result = ({ score }: { score: number }) => {
         textAlign: 'center',
         color: 'blue',
         fontSize: 'xxx-large',
-        backgroundColor: "yellow"
       }}>
       <div className='result'>
         <div className='text'>
