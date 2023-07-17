@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useMemo } from 'react';
 import { Button } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
@@ -17,11 +18,11 @@ type Option = {
 type History = {
   solutionCountryCode: string; // megoldás
   selectedOptions: Array<Option>; // válaszlehetőségek
-  date: Date; 
-  gameCount: number; 
+  date: string;
+  gameCount: number;
 };
 
-function currentDate() { 
+function currentDate() {
   const date = new Date(); // megadjuk aa mostani dátumot
   const day = date.getDate();
   const month = date.getMonth() + 1;
@@ -31,14 +32,15 @@ function currentDate() {
 }
 
 function App() {
-  const [score, setScore] = useState(0); // számoljuk az 5 játékból mennyit talált el 
+  const [score, setScore] = useState(0); // számoljuk az 5 játékból mennyit talált el
 
   const localStorageLastUsedDateLabel = 'flagTips-lastUsedDate';
   const localStorageSolutionCountryCodeLabel = 'flagTips-solutionCountryCode';
   const localStorageSelectedOptionsLabel = 'flagTips-selectedOptions';
   const localStorageGameCountLabel = 'flag-tips-gameCount';
 
-  const [isCleanSheet, setIsCleanSheet] = useState<boolean>(() => { // nullázzon le mindent, ha új nap van
+  const [isCleanSheet, setIsCleanSheet] = useState<boolean>(() => {
+    // nullázzon le mindent, ha új nap van
     const savedLastUsedDate =
       localStorage.getItem(localStorageLastUsedDateLabel) || '{}';
 
@@ -55,7 +57,7 @@ function App() {
     }
   });
 
-  // számoljuk a játékokat, mert egy nap csak 5-ször lehet játszani
+  // számoljuk a j átékokat, mert egy nap csak 5-ször lehet játszani
   const [gameCount, setGameCount] = useState<number>(() => {
     // ha először nyitja meg az oldalt, akkor 0; egyébként annyi amennyit már játszott aznap
 
@@ -123,6 +125,42 @@ function App() {
       return defaultOptions;
     }
   });
+
+  const [history, setHistory] = useState<Array<History>>([]);
+
+  useEffect(() => {
+    console.log('history');
+    console.log(history);
+    if (
+      history.length === 0 ||
+      history[0].date !== new Date().toISOString().split('T')[0] ||
+      history[0].gameCount !== gameCount
+    ) {
+      console.log('1+2');
+      const newGame = {
+        solutionCountryCode: solutionCountryCode,
+        selectedOptions: selectedOptions,
+        date: new Date().toISOString().split('T')[0],
+        gameCount: gameCount,
+      };
+      const updatedHistory = [newGame, ...history];
+      console.log('updatedHistory 1+2');
+      console.log(updatedHistory);
+      setHistory(updatedHistory);
+    } else {
+      console.log('3');
+      const newGame = {
+        solutionCountryCode: solutionCountryCode,
+        selectedOptions: selectedOptions,
+        date: new Date().toISOString().split('T')[0],
+        gameCount: gameCount,
+      };
+      const updatedHistory = [newGame, ...history.slice(1)];
+      console.log('updatedHistory 3');
+      console.log(updatedHistory);
+      setHistory(updatedHistory);
+    }
+  }, [selectedOptions, gameCount, solutionCountryCode]);
 
   useEffect(() => {
     localStorage.setItem(
@@ -216,36 +254,18 @@ function App() {
         textAlign: 'center',
       }}>
       <div>
-        <div // flag-tips és history gomb közös divje
+        <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between'
+            // ez a Flag-Tips felirat css-e
+            textTransform: 'uppercase',
+            fontSize: '40px',
+            fontWeight: 'bold',
+            borderBottom: '2px solid rgba(0, 0, 0, 0.11)',
+            marginBottom: '10px',
+            padding: '10px 0',
+            marginRight: '30px',
           }}>
-          <Button
-            style={{
-              color: 'black',
-              fontSize: '10px',
-              fontWeight: 'bold',
-              border: '3px solid rgba(0, 0, 0, 0.2)',
-              background: 'grey',
-              marginLeft: '30px'
-            }}>
-            History
-          </Button>
-          <div
-            style={{
-              // ez a Flag-Tips felirat css-e
-              textTransform: 'uppercase',
-              fontSize: '40px',
-              fontWeight: 'bold',
-              borderBottom: '2px solid rgba(0, 0, 0, 0.11)',
-              marginBottom: '10px',
-              padding: '10px 0',
-              marginRight: '30px'
-            }}>
-            Flag - Tips
-          </div>
+          Flag - Tips
         </div>
       </div>
       <ToastContainer />
@@ -301,3 +321,23 @@ function App() {
 
 export default App;
 export type { Option };
+export type { History };
+
+/*
+<div  
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
+          <Button
+            style={{
+              color: 'black',
+              fontSize: '10px',
+              fontWeight: 'bold',
+              border: '3px solid rgba(0, 0, 0, 0.2)',
+              background: 'grey',
+              marginLeft: '30px'
+            }}>
+            History
+          </Button>*/
