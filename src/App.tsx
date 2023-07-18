@@ -7,6 +7,7 @@ import FlagComponent from './FlagComponent';
 import DropdownMenu from './DropdownMenu';
 import countriesData from './countries.json';
 import Result from './Result';
+import Modal from '@mui/material/Modal';
 
 const countries: { [key: string]: string } = countriesData;
 
@@ -247,16 +248,30 @@ function App() {
     <Result score={score} />
   ) : (
     <div
-      style={{
-        // ez a zászló css-e
+      style={{  // ez a zászló css-e
         width: '500px',
         margin: 'auto',
         textAlign: 'center',
       }}>
-      <div>
-        <div
+      <div
+        style={{ // ez a flag-tips felirat és a history gomb css-e
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
+        <Button
           style={{
-            // ez a Flag-Tips felirat css-e
+            color: 'black',
+            fontSize: '10px',
+            fontWeight: 'bold',
+            border: '3px solid rgba(0, 0, 0, 0.2)',
+            background: 'grey',
+            marginLeft: '30px',
+          }}>
+          History
+        </Button>
+        <div
+          style={{    // ez a Flag-Tips felirat css-e
             textTransform: 'uppercase',
             fontSize: '40px',
             fontWeight: 'bold',
@@ -322,22 +337,3 @@ function App() {
 export default App;
 export type { Option };
 export type { History };
-
-/*
-<div  
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-          }}>
-          <Button
-            style={{
-              color: 'black',
-              fontSize: '10px',
-              fontWeight: 'bold',
-              border: '3px solid rgba(0, 0, 0, 0.2)',
-              background: 'grey',
-              marginLeft: '30px'
-            }}>
-            History
-          </Button>*/
