@@ -8,6 +8,7 @@ import DropdownMenu from './DropdownMenu';
 import countriesData from './countries.json';
 import Result from './Result';
 import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 
 const countries: { [key: string]: string } = countriesData;
 
@@ -244,17 +245,35 @@ function App() {
     }
   }
 
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const style = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
   return gameCount === 6 ? (
     <Result score={score} />
   ) : (
     <div
-      style={{  // ez a zászló css-e
+      style={{
+        // ez a zászló css-e
         width: '500px',
         margin: 'auto',
         textAlign: 'center',
       }}>
       <div
-        style={{ // ez a flag-tips felirat és a history gomb css-e
+        style={{
+          // ez a flag-tips felirat és a history gomb css-e
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
@@ -267,11 +286,22 @@ function App() {
             border: '3px solid rgba(0, 0, 0, 0.2)',
             background: 'grey',
             marginLeft: '30px',
-          }}>
+          }}
+          onClick={handleOpen}>
           History
         </Button>
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby='modal-modal-title'
+          aria-describedby='modal-modal-description'>
+          <Box sx={style}>
+            
+          </Box>
+        </Modal>
         <div
-          style={{    // ez a Flag-Tips felirat css-e
+          style={{
+            // ez a Flag-Tips felirat css-e
             textTransform: 'uppercase',
             fontSize: '40px',
             fontWeight: 'bold',
