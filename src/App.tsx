@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useState, useEffect, useMemo } from 'react';
 import { Button } from '@mui/material';
 import { ToastContainer, toast } from 'react-toastify';
@@ -131,14 +130,11 @@ function App() {
   const [history, setHistory] = useState<Array<History>>([]);
 
   useEffect(() => {
-    console.log('history');
-    console.log(history);
     if (
       history.length === 0 ||
       history[0].date !== new Date().toISOString().split('T')[0] ||
       history[0].gameCount !== gameCount
     ) {
-      console.log('1+2');
       const newGame = {
         solutionCountryCode: solutionCountryCode,
         selectedOptions: selectedOptions,
@@ -146,11 +142,8 @@ function App() {
         gameCount: gameCount,
       };
       const updatedHistory = [newGame, ...history];
-      console.log('updatedHistory 1+2');
-      console.log(updatedHistory);
       setHistory(updatedHistory);
     } else {
-      console.log('3');
       const newGame = {
         solutionCountryCode: solutionCountryCode,
         selectedOptions: selectedOptions,
@@ -158,8 +151,6 @@ function App() {
         gameCount: gameCount,
       };
       const updatedHistory = [newGame, ...history.slice(1)];
-      console.log('updatedHistory 3');
-      console.log(updatedHistory);
       setHistory(updatedHistory);
     }
   }, [selectedOptions, gameCount, solutionCountryCode]);
@@ -245,6 +236,7 @@ function App() {
     }
   }
 
+  // Modal réaznek a statje meg a css-e
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -254,11 +246,11 @@ function App() {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
+    width: '700px',
+    bgcolor: 'white',
+    border: '2px solid black',
     boxShadow: 24,
-    p: 4,
+    overflow: 'scroll',
   };
 
   return gameCount === 6 ? (
@@ -296,7 +288,13 @@ function App() {
           aria-labelledby='modal-modal-title'
           aria-describedby='modal-modal-description'>
           <Box sx={style}>
-            
+            <div
+              className='container' // modal rész container css-e
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                border: '3px solid rgba(0, 0, 0, 0.2)',
           </Box>
         </Modal>
         <div
