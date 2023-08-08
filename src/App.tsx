@@ -295,6 +295,26 @@ function App() {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 border: '3px solid rgba(0, 0, 0, 0.2)',
+              }}>
+              {history.map((historyItem, index) => (
+                <div key={index}>
+                  <div style={{ 
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                   }}>
+                  {historyItem.date} / {historyItem.gameCount}
+                  </div>
+                  <div 
+                  style={{
+                    width: '100px',
+                    marginTop: '5px'
+                  }}>
+                  <FlagComponent countryCode={historyItem.solutionCountryCode} />                 
+                  </div>
+                </div>                
+              ))}
+            </div>
           </Box>
         </Modal>
         <div
