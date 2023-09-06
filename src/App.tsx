@@ -236,7 +236,7 @@ function App() {
     }
   }
 
-  // Modal réaznek a statje meg a css-e
+  // Modal résznek a statje meg a css-e
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -307,7 +307,7 @@ function App() {
                   </div>
                   <div 
                   style={{
-                    width: '100px',
+                    width: '80px',
                     marginTop: '5px'
                   }}>
                   <FlagComponent countryCode={historyItem.solutionCountryCode} />                 
