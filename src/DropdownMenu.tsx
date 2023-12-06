@@ -1,7 +1,7 @@
 import { Autocomplete, TextField } from '@mui/material';
 import countriesData from './countries.json';
 import type { Option } from './App';
-
+import './index.css';
 
 const countries: { [key: string]: string } = countriesData; //a json fájlban nincs index definiálva, ezért nem tudja használni a string kifejezést. ezért kell ez a változó.
 

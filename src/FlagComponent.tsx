@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './index.css';
 
 const FlagComponent = ({ countryCode }: { countryCode: string | null }) => {
   const [currentFlag, setCurrentFlag] = useState(null);
@@ -15,7 +16,7 @@ const FlagComponent = ({ countryCode }: { countryCode: string | null }) => {
   return (
     <div>
       {currentFlag && (
-        <img
+        <img 
           style={{
             width: '100%',
           }}
