@@ -213,7 +213,7 @@ function App() {
           // ez a zászló css-e
           width: '500px',
           margin: 'auto',
-          marginTop: '20px'
+          padding: '20px'
         }}>
         <ToastContainer />
         <FlagComponent countryCode={solutionCountryCode} />
